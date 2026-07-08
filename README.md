@@ -186,16 +186,29 @@ ysunetlogin logout
 #!/bin/bash
 # auto_login.sh
 
-export RUIJIE_USERNAME=1145141919810
-export RUIJIE_PASSWORD=mypassword
+# 设置用户名和密码
+export RUIJIE_USERNAME=1145141919810 
+export RUIJIE_PASSWORD=leave_a_star_thanks
+
+LOGIN_BIN="你的路径/bin/ysunetlogin"
 
 # 检查是否已登录
-if ysunetlogin status | grep -q "Offline"; then
-    echo "Not logged in, attempting to login..."
-    ysunetlogin login
+if "$LOGIN_BIN" status | grep -q "Offline"; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Not logged in, attempting to login..."
+    "$LOGIN_BIN" login
 else
-    echo "Already logged in"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Already logged in"
 fi
+```
+
+cron定时执行
+```bash
+cronab -e
+```
+
+写入
+```
+*/5 * * * * 你的脚本路径/auto_login.sh >> 输出日志路径/auto_login.log 2>&1
 ```
 
 ### 3. 验证码处理
